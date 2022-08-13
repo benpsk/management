@@ -7,11 +7,13 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RequestCompany;
 use App\Models\Company\Company;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
+use SebastianBergmann\Timer\ResourceUsageFormatter;
+use SebastianBergmann\Timer\Timer;
 
 class CompanyController extends Controller
 {
-
 
     /**
      * Create a new controller instance.
@@ -30,7 +32,26 @@ class CompanyController extends Controller
      */
     public function index()
     {
+        $timer = new Timer;
+        $timer->start();
+
         $companies = Company::where('status', 1)->orderBy('created_at', 'desc')->paginate(10);
+        // $companies = Cache::remember('users', 10, function () {
+        //     return Company::where('status', 1)->orderBy('created_at', 'desc')->paginate(10);
+        // });
+
+        // if (!Cache::has('companies')) {
+        //     $data = Company::where('status', 1)->orderBy('created_at', 'desc');
+        //     Cache::put(
+        //         'companies',
+        //         $data,
+        //         60
+        //     );
+        // }
+
+        // $companies = Cache::get('companies');
+
+        print (new ResourceUsageFormatter)->resourceUsage($timer->stop());
         return view('company.index', compact('companies'));
     }
 
