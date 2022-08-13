@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\RequestEmployee;
 use App\Models\Company\Company;
 use App\Models\Employee\Employee;
+use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Support\Facades\DB;
 
 class EmployeeController extends Controller
@@ -32,6 +33,10 @@ class EmployeeController extends Controller
     {
         $employees = Employee::where('status', 1)->orderBy('created_at', 'desc')->paginate(10);
 
+        $num = 566;
+        $str = 'Hello World';
+        $arr = [1, 2, 3, 'Hello'];
+        
         return view('employee.index', compact('employees'));
     }
 
