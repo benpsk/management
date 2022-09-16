@@ -1,0 +1,49 @@
+version: "3.7"
+
+networks:
+    app-network:
+        driver: bridge
+
+services:
+    app:
+      build:
+        context: ./
+        dockerfile: Dockerfile
+      image: management-laravel
+      container_name: app
+      restart: unless-stopped
+      tty: true
+      working_dir: /var/www
+      volumes:
+        - ./:/var/www/
+      networks:
+        - app-network
+        
+    mysql:
+      image: mariadb
+      container_name: mysql
+      restart: unless-stopped
+      tty: true
+      environment:
+        MYSQL_DATABASE: '${DB_DATABASE}'
+        MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+        MYSQL_PASSWORD: '${DB_PASSWORD}'
+        MYSQL_USER: '${DB_USERNAME}'
+        SERVICE_TAGS: dev
+        SERVICE_NAME: mysql
+      volumes: 
+          - .:/var/lib/mysql
+      networks:
+          - app-network
+    
+    nginx:
+      image: nginx:1.19.8-alpine
+      container_name: nginx
+      restart: unless-stopped
+      tty: true
+      ports:
+        - 8000:8000
+      volumes:
+        - ./:/var/www 
+        - ./:/etc/nginx/conf.d
+        
