@@ -20,6 +20,10 @@ Route::get('/login', 'HomeController@showLogin')->middleware('guest')->name('log
 Route::post('/login', 'HomeController@login')->name('login');
 Route::post('/logout', 'HomeController@logout')->name('logout');
 
+Route::get('/otp', function () {
+    return view('home');
+});
+
 
 Route::middleware('auth')->group(function () {
 
