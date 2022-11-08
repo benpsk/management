@@ -18,7 +18,7 @@
             <div class="alert alert-success" id="successOtpAuth" style="display: none;"></div>
             <form>
                 <input type="text" id="verification" class="form-control" placeholder="Verification code">
-                <button type="button" class="btn btn-danger mt-3" onclick="verify()">Verify code</button>
+                <button type="button" class="btn btn-danger mt-3" id="verify">Verify code</button>
             </form>
         </div>
     </div>
