@@ -1,8 +1,8 @@
 FROM php:8.0-fpm
 
 # Arguments defined in docker-compose.yml
-ARG user
-ARG uid
+ARG user=ben
+ARG uid=1000
 
 # Set working directory
 WORKDIR /var/www
