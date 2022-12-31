@@ -8,6 +8,16 @@ use Tests\TestCase;
 
 class UserTest extends TestCase
 {
+    use RefreshDatabase;
+
+    // public function setUp(): void
+    // {
+    //     parent::setUp();
+    //     $this->seed([]);
+
+    //     // login
+    // }
+
     /**
      * A basic feature test example.
      *
@@ -15,8 +25,6 @@ class UserTest extends TestCase
      */
     public function testExample()
     {
-        $response = $this->get('/');
-
-        $response->assertStatus(302);
+        $this->assertTrue(true);
     }
 }
