@@ -44,7 +44,9 @@ class HomeController extends Controller
 
             return redirect()->intended('home');
         }
-        return back()->with('error', 'Oppes! You have entered invalid credentials');
+        return back()
+            ->with('error', 'Oppes! You have entered invalid credentials')
+            ->withInput($request->only('email'));
     }
 
     public function logout()
