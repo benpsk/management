@@ -20,7 +20,6 @@ Route::get('/login', 'HomeController@showLogin')->middleware('guest')->name('log
 Route::post('/login', 'HomeController@login')->name('login');
 Route::post('/logout', 'HomeController@logout')->name('logout');
 
-
 Route::middleware('auth')->group(function () {
 
     Route::get('/', 'Company\CompanyController@index');
