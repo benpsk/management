@@ -26,23 +26,18 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-
         Gate::define('gate', function (User $user) {
 
             $flag = false;
-            foreach ($user->roles as $value) {
-                if ($value->name == 'Administrator') {
-                    $flag = true;
-                } else {
-                    $flag = false;
-                }
+
+            if (
+                isset($user->roles) &&
+                in_array('Administrator', $user->roles->pluck('name')->toArray())
+            ) {
+                $flag = true;
             }
 
-            if ($flag == true) {
-                return true;
-            } else {
-                return false;
-            }
+            return $flag;
         });
     }
 }

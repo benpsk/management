@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use App\Models\Employee\Employee;
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
