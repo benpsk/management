@@ -22,7 +22,7 @@ class LoginTest extends TestCase
 
     public function test_user_cannot_view_a_login_form_when_authenticated()
     {
-        $user = factory(User::class)->make();
+        $user = User::factory()->create();
 
         $response = $this->actingAs($user)->get('/login');
 
@@ -31,7 +31,7 @@ class LoginTest extends TestCase
 
     public function test_user_can_login_with_correct_credentials()
     {
-        $user = factory(User::class)->create([
+        $user = User::factory()->create([
             'password' => bcrypt($password = 'password'),
         ]);
 
@@ -47,7 +47,7 @@ class LoginTest extends TestCase
 
     public function test_user_cannot_login_with_incorrect_password()
     {
-        $user = factory(User::class)->create([
+        $user = User::factory()->create([
             'password' => bcrypt('password'),
         ]);
 
@@ -67,7 +67,7 @@ class LoginTest extends TestCase
 
     public function test_remember_me_functionality()
     {
-        $user = factory(User::class)->create([
+        $user = User::factory()->create([
             'id' => random_int(1, 100),
             'password' => bcrypt($password = 'password'),
         ]);
