@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Company\CompanyController;
+use App\Http\Controllers\Employee\EmployeeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,15 +23,15 @@ Route::post('/logout', 'HomeController@logout')->name('logout');
 
 Route::middleware('auth')->group(function () {
 
-    Route::get('/', 'Company\CompanyController@index');
-    Route::get('/home', 'Company\@index')->name('home');
+    Route::get('/', [CompanyController::class, 'index']);
+    Route::get('/home', [CompanyController::class, 'index'])->name('home');
 
-    Route::resource('company', 'Company\CompanyController');
-    Route::post('company/search', 'Company\CompanyController@searchData')->name('com-search');
-    Route::post('com-download', 'Company\CompanyController@download')->name('com-download');
+    Route::resource('company', CompanyController::class);
+    Route::post('company/search', [CompanyController::class, 'searchData'])->name('com-search');
+    Route::post('com-download', [CompanyController::class, 'download'])->name('com-download');
 
 
-    Route::resource('employee', 'Employee\EmployeeController');
-    Route::post('employee/search', 'Employee\EmployeeController@searchData')->name('emp-search');
-    Route::post('emp-download', 'Employee\EmployeeController@download')->name('emp-download');
+    Route::resource('employee', EmployeeController::class);
+    Route::post('employee/search', [EmployeeController::class, 'searchData'])->name('emp-search');
+    Route::post('emp-download', [EmployeeController::class, 'download'])->name('emp-download');
 });
