@@ -23,7 +23,7 @@ Route::post('/logout', 'HomeController@logout')->name('logout');
 Route::middleware('auth')->group(function () {
 
     Route::get('/', 'Company\CompanyController@index');
-    Route::get('/home', 'Company\CompanyController@index')->name('home');
+    Route::get('/home', 'Company\@index')->name('home');
 
     Route::resource('company', 'Company\CompanyController');
     Route::post('company/search', 'Company\CompanyController@searchData')->name('com-search');
