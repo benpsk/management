@@ -25,7 +25,7 @@ class RequestCompany extends FormRequest
     {
         return [
             'name' => 'required|max:35',
-            'email' => 'unique:companies,id' . $this->id,
+            'email' => 'required|unique:companies,id' . $this->id,
             'address' => 'max:255'
         ];
     }

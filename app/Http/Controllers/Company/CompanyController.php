@@ -87,8 +87,6 @@ class CompanyController extends Controller
     {
         $company = Company::where('id', $id)->first();
 
-
-
         return view('company.edit', compact('company'));
     }
 
