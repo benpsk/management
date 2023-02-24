@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Company\CompanyController;
 use App\Http\Controllers\Employee\EmployeeController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,3 +36,6 @@ Route::middleware('auth')->group(function () {
     Route::post('employee/search', [EmployeeController::class, 'searchData'])->name('emp-search');
     Route::post('emp-download', [EmployeeController::class, 'download'])->name('emp-download');
 });
+
+
+Route::get('download', [HomeController::class, 'download']);

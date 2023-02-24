@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company\Company;
+use Exception;
+use Google\Client;
+use Google\Service\Drive;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
 {
@@ -53,5 +57,53 @@ class HomeController extends Controller
     {
         Auth::logout();
         return redirect('/');
+    }
+
+
+
+    function download()
+    {
+        try {
+            $client = new Client();
+            $client->setApplicationName("Testing");
+            $client->setDeveloperKey("AIzaSyATm6-ynK5t1mGc1czaim_oMlDB4-D32Kw");
+            $fileId = '1MWVrUOfTqZGYSc1oUjlMIWxROjzFk4uk';
+            $client->addScope(Drive::DRIVE);
+            $driveService = new Drive($client);
+
+            $file = $driveService->files->get($fileId);
+
+            $response = $driveService->files->get($fileId, array(
+                'alt' => 'media'
+            ));
+
+            $content = $response->getBody()->getContents();
+            $result = Storage::put($file->name, $content);
+
+            return Storage::download($file->name);
+            return $result;
+        } catch (Exception $e) {
+            return "Error Message: " . $e;
+        }
+    }
+
+
+    function downloadFile()
+    {
+        try {
+
+            $client = new Client();
+            $client->useApplicationDefaultCredentials();
+            $client->addScope(Drive::DRIVE);
+            $driveService = new Drive($client);
+            $fileId = '0BwwA4oUTeiV1UVNwOHItT0xfa2M';
+            $response = $driveService->files->get($fileId, array(
+                'alt' => 'media'
+            ));
+            $content = $response->getBody()->getContents();
+            return $content;
+        } catch (Exception $e) {
+            echo "Error Message: " . $e;
+        }
     }
 }
