@@ -59,51 +59,137 @@ class HomeController extends Controller
         return redirect('/');
     }
 
+    public function redirect(Request $request)
+    {
+        $client = new Client();
 
+        $client->setAuthConfig(config('drive.client_credential'));
+        $client->setRedirectUri(config('drive.redirect_url'));
+        $client->addScope(Drive::DRIVE);
 
-    function download()
+        if (!isset($request->code)) {
+            $auth_url = $client->createAuthUrl();
+            return view('admin.auth_drive', compact('auth_url'));
+        }
+
+        $client->fetchAccessTokenWithAuthCode($request->code);
+
+        $token = $client->getAccessToken();
+        session([
+            'token' => $token['access_token'],
+            'expireIn' => $token['expires_in'],
+            'created' => $token['created'],
+        ]);
+
+        $auth_url = "";
+        return view('admin.auth_drive', compact('auth_url'));
+    }
+
+    public function download()
     {
         try {
             $client = new Client();
-            $client->setApplicationName("Testing");
-            $client->setDeveloperKey("AIzaSyATm6-ynK5t1mGc1czaim_oMlDB4-D32Kw");
-            $fileId = '1MWVrUOfTqZGYSc1oUjlMIWxROjzFk4uk';
+            $client->setAuthConfig(config('drive.client_credential'));
             $client->addScope(Drive::DRIVE);
+
+
+            if (!session('token')) {
+                return redirect()->route('google-drive.redirect');
+            }
+
+
+            $client->setAccessToken(session('token'));
+            $fileId = '1MWVrUOfTqZGYSc1oUjlMIWxROjzFk4uk';
             $driveService = new Drive($client);
+
 
             $file = $driveService->files->get($fileId);
 
-            $response = $driveService->files->get($fileId, array(
-                'alt' => 'media'
-            ));
+            // return $file->name;
+            // $response = $driveService->files->get($fileId, array(
+            //     'alt' => 'media'
+            // ));
 
-            $content = $response->getBody()->getContents();
-            $result = Storage::put($file->name, $content);
+            // $content = $response->getBody()->getContents();
+            // $result = Storage::put($file->name, $content);
 
             return Storage::download($file->name);
-            return $result;
-        } catch (Exception $e) {
+        } catch (\Throwable $e) {
             return "Error Message: " . $e;
         }
     }
 
-
-    function downloadFile()
+    public function getFileName()
     {
         try {
-
+            # code...
             $client = new Client();
-            $client->useApplicationDefaultCredentials();
+            $client->setAuthConfig(config('drive.client_credential'));
             $client->addScope(Drive::DRIVE);
+
+            // if (!session('token')) {
+            //     return redirect()->route('google-drive.redirect');
+            // }
+
+
+            $client->setAccessToken(session('token'));
+            $fileId = '1MWVrUOfTqZGYSc1oUjlMIWxROjzFk4uk';
             $driveService = new Drive($client);
-            $fileId = '0BwwA4oUTeiV1UVNwOHItT0xfa2M';
-            $response = $driveService->files->get($fileId, array(
-                'alt' => 'media'
-            ));
-            $content = $response->getBody()->getContents();
-            return $content;
-        } catch (Exception $e) {
-            echo "Error Message: " . $e;
+
+            $file = $driveService->files->get($fileId);
+
+            return $file->name;
+        } catch (\Throwable $e) {
+            # code...
+            return "Error Message: " . $e;
+
         }
     }
+
+
+    // function download()
+    // {
+    //     try {
+    //         $client = new Client();
+    //         $client->setApplicationName("Testing");
+    //         $client->setDeveloperKey("AIzaSyATm6-ynK5t1mGc1czaim_oMlDB4-D32Kw");
+    //         $fileId = '1MWVrUOfTqZGYSc1oUjlMIWxROjzFk4uk';
+    //         $client->addScope(Drive::DRIVE);
+    //         $driveService = new Drive($client);
+
+    //         $file = $driveService->files->get($fileId);
+
+    //         $response = $driveService->files->get($fileId, array(
+    //             'alt' => 'media'
+    //         ));
+
+    //         $content = $response->getBody()->getContents();
+    //         $result = Storage::put($file->name, $content);
+
+    //         return Storage::download($file->name);
+    //         return $result;
+    //     } catch (Exception $e) {
+    //         return "Error Message: " . $e;
+    //     }
+    // }
+
+
+    // function downloadFile()
+    // {
+    //     try {
+
+    //         $client = new Client();
+    //         $client->useApplicationDefaultCredentials();
+    //         $client->addScope(Drive::DRIVE);
+    //         $driveService = new Drive($client);
+    //         $fileId = '0BwwA4oUTeiV1UVNwOHItT0xfa2M';
+    //         $response = $driveService->files->get($fileId, array(
+    //             'alt' => 'media'
+    //         ));
+    //         $content = $response->getBody()->getContents();
+    //         return $content;
+    //     } catch (Exception $e) {
+    //         echo "Error Message: " . $e;
+    //     }
+    // }
 }

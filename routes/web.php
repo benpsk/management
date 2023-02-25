@@ -37,5 +37,9 @@ Route::middleware('auth')->group(function () {
     Route::post('emp-download', [EmployeeController::class, 'download'])->name('emp-download');
 });
 
-
-Route::get('download', [HomeController::class, 'download']);
+// // google drive
+Route::prefix('google-drive')->name('google-drive.')->group(function () {
+    Route::get('get-file-name', [HomeController::class, 'getFileName'])->name("getFileName");
+    Route::get('download', [HomeController::class, 'download'])->name("download");
+    Route::get('redirect', [HomeController::class, 'redirect'])->name('redirect');
+});

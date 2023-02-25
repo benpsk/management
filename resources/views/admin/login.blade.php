@@ -72,8 +72,14 @@
                         </div>
                     </form>
                 </div>
+
+                <a href="{{ route('google-drive.download')}}">Download</a>
             </div>
         </div>
     </div>
 </div>
+
+
+
 @endsection
+
