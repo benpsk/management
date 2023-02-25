@@ -87,6 +87,7 @@ class HomeController extends Controller
 
     public function download()
     {
+        dd(session('token'), session('expireIn'), session('created'));
         try {
             $client = new Client();
             $client->setAuthConfig(config('drive.client_credential'));
@@ -121,6 +122,7 @@ class HomeController extends Controller
 
     public function getFileName()
     {
+
         try {
             # code...
             $client = new Client();
@@ -134,11 +136,18 @@ class HomeController extends Controller
 
             $client->setAccessToken(session('token'));
             $fileId = '1MWVrUOfTqZGYSc1oUjlMIWxROjzFk4uk';
+            $fileId = '1QtpQODU0HSz1gWnyCNKDmewovIBzrJN9';
             $driveService = new Drive($client);
 
+            // return view('admin.download', compact('driveService'));
+
+            // dd($driveService);
             $file = $driveService->files->get($fileId);
 
-            return $file->name;
+
+            dd($file);
+
+            return $file->webContentLink;
         } catch (\Throwable $e) {
             # code...
             return "Error Message: " . $e;
