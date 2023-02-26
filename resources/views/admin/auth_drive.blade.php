@@ -8,7 +8,7 @@
 
             <div class="progress " role="progressbar" aria-label="Success striped example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
                 <div class="progress-bar progress-bar-striped bg-success progress-bar-animated bar" ></div>
-                </div>
+            </div>
             <a href="{{ $auth_url }}" id="drive">Click Link</a>
 
                 <a href="{{ route('google-drive.download')}}">Download</a>
