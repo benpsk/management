@@ -151,7 +151,6 @@ class HomeController extends Controller
         } catch (\Throwable $e) {
             # code...
             return "Error Message: " . $e;
-
         }
     }
 
