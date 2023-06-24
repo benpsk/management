@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Admin\Role;
 use App\Models\Company\Company;
 use App\Models\User;
 use Database\Seeders\CompanyTableSeeder;
@@ -14,7 +15,7 @@ class CompanyTest extends TestCase
 {
     use RefreshDatabase;
 
-    private User $user;
+    protected User $user;
 
     public function setUp(): void
     {
@@ -27,6 +28,13 @@ class CompanyTest extends TestCase
     private function getUser(): User
     {
         return User::factory()->create();
+    }
+
+
+    private function grantAdmin(): void
+    {
+        $admin = Role::where('name', 'Administrator')->value('id');
+        $this->user->roles()->attach($admin);
     }
     /**
      * A basic feature test example.
@@ -57,8 +65,7 @@ class CompanyTest extends TestCase
 
     public function test_admin_can_see_company_create_button()
     {
-        $this->user->roles()->attach(1);
-
+        $this->grantAdmin();
         $response = $this->actingAs($this->user)->get('/');
 
         $response->assertStatus(200);
@@ -75,7 +82,7 @@ class CompanyTest extends TestCase
 
     public function test_admin_can_access_company_create_action()
     {
-        $this->user->roles()->attach(1);
+        $this->grantAdmin();
 
         $response = $this->actingAs($this->user)->get('/company/create');
 
@@ -91,7 +98,7 @@ class CompanyTest extends TestCase
 
     public function test_create_company_validation_fail()
     {
-        $this->user->roles()->attach(1);
+        $this->grantAdmin();
 
         // $response = $this->actingAs($this->user)
         //     ->withHeaders([
