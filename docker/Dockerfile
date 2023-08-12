@@ -34,4 +34,4 @@ COPY release-tasks.sh /usr/local/bin/release-tasks.sh
 RUN chmod +x /usr/local/bin/start-container.sh \
     && chmod +x /usr/local/bin/release-tasks.sh
 
-ENTRYPOINT [ "start-container.sh" ]
+CMD [ "start-container.sh" ]
