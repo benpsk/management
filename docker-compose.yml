@@ -3,8 +3,10 @@ version: '3.9'
 services:
   app:
     build:
-      context: .
+      context: ./docker
       dockerfile: Dockerfile
+      args:
+        VERSION: ${PHP_VERSION:-8.1}
     expose:
       - 9000
     restart: unless-stopped
@@ -12,32 +14,32 @@ services:
       ROLE: app
       APPENV: ${APP_ENV:-production}
     volumes:
-      - ./php.ini:/etc/php/8.1/cli/conf.d/php.ini
+      - ./docker/php.ini:/etc/php/${PHP_VERSION}/cli/conf.d/php.ini
       - .:/var/www/html
     networks:
-      - management-net
+      - net
     depends_on:
       - mysql
 
   webserver:
-    image: nginx:1.21.6-alpine
+    image: nginx:1.24.0-alpine
     ports:
-      - 8004:80
+      - 8001:80
     restart: unless-stopped
     environment:
       - NGINX_HOST=localhost
       - NGINX_PORT=80
     volumes:
-      - ./default.conf.template:/etc/nginx/templates/default.conf.template
+      - ./docker/default.conf.template:/etc/nginx/templates/default.conf.template
       - ./:/var/www/html
     networks:
-      - management-net
+      - net
     depends_on:
       - app
       - mysql
 
   mysql:
-    image: mariadb:10.9.3-jammy
+    image: mariadb:10.11.2-jammy
     ports:
       - 3305:3306
     restart: unless-stopped
@@ -49,18 +51,27 @@ services:
       # SERVICE_TAGS: dev
       # SERVICE_NAME: mysql
     volumes:
-      - mysql_data:/var/lib/mysql
+      - db:/var/lib/mysql
     networks:
-      - management-net
+      - net
     healthcheck:
-      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", "-u${DB_USERNAME}", "-p${DB_PASSWORD}"]
+      test:
+        [
+          "CMD",
+          "mysqladmin",
+          "ping",
+          "-h",
+          "localhost",
+          "-u${DB_USERNAME}",
+          "-p${DB_PASSWORD}"
+        ]
       retries: 3
       timeout: 5s
 
 networks:
-  management-net:
+  net:
     driver: bridge
 
 volumes:
-  mysql_data:
+  db:
     driver: local
