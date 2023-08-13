@@ -20,6 +20,9 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd \
     zip sodium
 
+RUN pecl install xdebug \
+	&& docker-php-ext-enable xdebug
+
 # Install Node.js lts version and NPM
 RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
     && apt-get install -y nodejs
@@ -27,7 +30,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
 # Get latest Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-COPY php.ini /etc/php/${VERSION}/cli/conf.d/php.ini 
+COPY php.ini /etc/php/${VERSION}/cli/conf.d/php.ini
 COPY start-container.sh /usr/local/bin/start-container.sh
 COPY release-tasks.sh /usr/local/bin/release-tasks.sh
 
