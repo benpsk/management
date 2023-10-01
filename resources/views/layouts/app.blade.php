@@ -1,84 +1,89 @@
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace("_", "-", app()->getLocale()) }}">
+
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1" name="viewport">
 
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+	<!-- CSRF Token -->
+	<meta content="{{ csrf_token() }}" name="csrf-token">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+	<title>{{ config("app.name", "Laravel") }}</title>
 
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+	<!-- Fonts -->
+	<link href="//fonts.gstatic.com" rel="dns-prefetch">
+	<link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
-@vite(['resources/css/app.css'])
-<script src="{{ asset('js/app.js')}}" async></script>
+	@vite(["resources/css/app.css"])
+	<script src="{{ asset("js/app.js") }}" async></script>
 </head>
+
 <body>
-    <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    Company Management Systems
-                </a>
-                {{-- Begin Right Collapse Navbar --}}
-                <div class="ml-auto border-left" id="navbarSupportedContent">
-                        
-                    <!-- Right Side Of Navbar -->
-                    <ul class="p-0 m-0 " style="list-style-type: none;">
-                        <!-- Authentication Links -->
-                        @guest
-                            @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
-                                </a>
+	<div id="app">
+		<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+			<div class="container">
+				<a class="navbar-brand" href="{{ url("/") }}">
+					Company Management Systems
+				</a>
+				{{-- Begin Right Collapse Navbar --}}
+				<div class="border-left ml-auto" id="navbarSupportedContent">
 
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item " href="{{ route('logout') }}"
-                                        onclick="event.preventDefault();
+					<!-- Right Side Of Navbar -->
+					<ul class="m-0 p-0" style="list-style-type: none;">
+						<!-- Authentication Links -->
+						@guest
+							@if (Route::has("login"))
+								<li class="nav-item">
+									<a class="nav-link" href="{{ route("login") }}">{{ __("Login") }}</a>
+								</li>
+							@endif
+						@else
+							<li class="nav-item dropdown">
+								<a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown"
+									href="#" id="navbarDropdown" role="button" v-pre>
+									{{ Auth::user()->name }}
+								</a>
+
+								<div aria-labelledby="navbarDropdown" class="dropdown-menu dropdown-menu-right">
+									<a class="dropdown-item" href="{{ route("logout") }}"
+										onclick="event.preventDefault();
                                                         document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
+										{{ __("Logout") }}
+									</a>
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                    
-                                </div>
-                            </li>
-                        @endguest
-                    </ul>
-                </div>
-                {{-- End of Right side Nab bar --}}
-            </div>
-        </nav>
+									<form action="{{ route("logout") }}" class="d-none" id="logout-form" method="POST">
+										@csrf
+									</form>
 
-        @auth
-            <aside class="container py-3">
-                <nav>
-                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                        <a class="nav-item nav-link {{ set_active('home') }} {{ set_active('/') }} {{ set_active('company*') }}" id="nav-home1-tab" href="{{ route('home')}}">Company</a>
-                        <a class="nav-item nav-link {{ set_active('employee*') }}" id="nav-home-tab"  href="{{ route('employee.index')}}">Employee</a>
-                    </div>
-                </nav>
-            </aside>
-        @endauth
-            
+								</div>
+							</li>
+						@endguest
+					</ul>
+				</div>
+				{{-- End of Right side Nab bar --}}
+			</div>
+		</nav>
 
-        <main class="">
-            @yield('content')
-        </main>
-        
-    </div>
+		@auth
+			<aside class="container py-3">
+				<nav>
+					<div class="nav nav-tabs" id="nav-tab" role="tablist">
+						<a class="nav-item nav-link {{ set_active("home") }} {{ set_active("/") }} {{ set_active("company*") }}"
+							href="{{ route("home") }}" id="nav-home1-tab">Company</a>
+						<a class="nav-item nav-link {{ set_active("employee*") }}" href="{{ route("employee.index") }}"
+							id="nav-home-tab">Employee</a>
+					</div>
+				</nav>
+			</aside>
+		@endauth
 
-@yield('script-after')
+		<main class="">
+			@yield("content")
+		</main>
+
+	</div>
+
+	@yield("script-after")
 </body>
+
 </html>
