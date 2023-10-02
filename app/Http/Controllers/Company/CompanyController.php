@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Company;
 
+use App\Events\CompanyCreated;
 use App\Exports\CompanyExport;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -54,13 +55,13 @@ class CompanyController extends Controller
     {
         $input = $request->validated();
 
-        // dd($input['name']);
-
         $company = new Company();
         $company->name = $input['name'];
         $company->email = $input['email'];
         $company->address = $input['address'];
         $company->save();
+
+        CompanyCreated::dispatch($company);
 
         return redirect('/');
     }

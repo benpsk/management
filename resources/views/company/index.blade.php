@@ -117,6 +117,13 @@
             document.getElementById("searchForm").action =  "{{ route('com-search')}}";
             $('#searchForm').submit();
         })
+
+
+        Echo.channel(`company`)
+    .listen('CompanyCreated', (e) => {
+        console.log(e);
+    });
+    console.log('hello');
     });
 </script>
 

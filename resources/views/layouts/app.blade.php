@@ -14,8 +14,9 @@
 	<link href="//fonts.gstatic.com" rel="dns-prefetch">
 	<link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
-	@vite(["resources/css/app.css"])
 	<script src="{{ asset("js/app.js") }}" async></script>
+
+	@vite(["resources/css/app.css", "resources/js/app.js"]);
 </head>
 
 <body>

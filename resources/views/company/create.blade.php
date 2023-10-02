@@ -39,3 +39,15 @@
         
 </div>
 @endsection
+@section('script-after')
+<script>
+
+$(function () {
+  Echo.channel(`company`)
+    .listen('CompanyCreated', (e) => {
+        console.log(e);
+    });
+    console.log('hello');
+});
+  </script>
+@endsection 
