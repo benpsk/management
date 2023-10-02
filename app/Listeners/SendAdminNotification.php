@@ -6,7 +6,7 @@ use App\Events\CompanyCreated;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
-class SendAdminNotification 
+class SendAdminNotification implements ShouldQueue
 {
     public $afterCommit = true;
     /**
