@@ -85,6 +85,16 @@
 	</div>
 
 	@yield("script-after")
+	<script>
+		console.log('app.blade');
+		$(function() {
+			Echo.channel(`company`)
+				.listen('CompanyCreated', (e) => {
+					console.log(e);
+					alert(e.company.name + " has been created");
+				})
+		});
+	</script>
 </body>
 
 </html>

@@ -7,6 +7,7 @@ use App\Exports\CompanyExport;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RequestCompany;
+use App\Jobs\ProcessCompany;
 use App\Models\Company\Company;
 use Illuminate\Support\Facades\Storage;
 
@@ -61,7 +62,7 @@ class CompanyController extends Controller
         $company->address = $input['address'];
         $company->save();
 
-        CompanyCreated::dispatch($company);
+        ProcessCompany::dispatch($company);
 
         return redirect('/');
     }
