@@ -23,9 +23,11 @@ RUN apt-get update && apt-get install -y \
 RUN pecl install xdebug \
 	&& docker-php-ext-enable xdebug
 
-# Install Node.js lts version and NPM
-RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
-    && apt-get install -y nodejs
+# Install Node.js lts version and NPM and supervisor
+RUN apt-get update && apt-get install -y ca-certificates curl gnupg supervisor \ 
+    && curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg \
+    && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list \
+    && apt-get update && apt-get install nodejs -y
 
 # Get latest Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -33,6 +35,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 COPY php.ini /etc/php/${VERSION}/cli/conf.d/php.ini
 COPY start-container.sh /usr/local/bin/start-container.sh
 COPY release-tasks.sh /usr/local/bin/release-tasks.sh
+COPY laravel-worker.conf /etc/supervisor/conf.d/laravel-worker.conf
 
 RUN chmod +x /usr/local/bin/start-container.sh \
     && chmod +x /usr/local/bin/release-tasks.sh
