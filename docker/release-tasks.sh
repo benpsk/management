@@ -16,8 +16,8 @@ if [ $ROLE == "app" ]; then
 
     else
         echo "Running tasks."
-        php /usr/bin/composer install
-        php artisan optimize:clear
+        # php /usr/bin/composer install
+        # php artisan optimize:clear
 
         # echo "Running assets."
         # npm install
@@ -30,3 +30,6 @@ chown -R www-data:www-data bootstrap/cache
 
 # start Supervisor
 supervisord -c /etc/supervisor/supervisord.conf
+
+# Start cron in the foreground
+cron &
