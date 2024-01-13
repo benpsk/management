@@ -15,7 +15,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN apt-get update && apt-get install -y \
     git curl \
     libpng-dev libonig-dev libxml2-dev \
-    zip unzip libzip-dev libsodium-dev vim \
+    zip unzip libzip-dev libsodium-dev\
     && apt-get clean && rm -rf /var/lib/apt/lists/* \
     && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd \
     zip sodium
@@ -38,8 +38,6 @@ COPY start-container.sh /usr/local/bin/start-container.sh
 COPY release-tasks.sh /usr/local/bin/release-tasks.sh
 COPY laravel-worker.conf /etc/supervisor/conf.d/laravel-worker.conf
 COPY my_cron_tab /etc/cron.d/my_cron_tab
-
-RUN chmod 644 /etc/cron.d/my_cron_tab
 
 # Create the log file to be able to run tail
 RUN touch /var/log/cron.log
