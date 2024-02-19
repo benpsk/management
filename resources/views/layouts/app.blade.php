@@ -17,7 +17,7 @@
 	<script src="{{ asset("js/app.js") }}" async></script>
 	<script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC" crossorigin="anonymous"></script>
 
-	@vite(["resources/css/app.css", "resources/js/app.js"]);
+	@vite(["resources/css/app.css", "resources/js/app.js"])
 </head>
 
 <body>
@@ -70,10 +70,20 @@
 			<aside class="container py-3">
 				<nav>
 					<div class="nav nav-tabs" id="nav-tab" role="tablist">
-						<a class="nav-item nav-link {{ set_active("home") }} {{ set_active("/") }} {{ set_active("company*") }}"
-							href="{{ route("home") }}" id="nav-home1-tab">Company</a>
-						<a class="nav-item nav-link {{ set_active("employee*") }}" href="{{ route("employee.index") }}"
-							id="nav-home-tab">Employee</a>
+						<a role="button" class="nav-item nav-link {{ set_active("home") }} {{ set_active("/") }} {{ set_active("company*") }}"
+							id="nav-home1-tab"
+							hx-get="{{ route("company.index") }}" 
+							hx-trigger="click"
+							hx-target="#listing"
+							hx-swap="outerHTML"	
+							>Company</a>
+						<a role="button" class="nav-item nav-link {{ set_active("employee*") }}" 
+							id="nav-home-tab"
+							hx-get="{{ route("employee.index") }}"
+							hx-trigger="click"
+							hx-target="#listing"
+							hx-swap="outerHTML"	
+							>Employee</a>
 					</div>
 				</nav>
 			</aside>
@@ -88,13 +98,13 @@
 	@yield("script-after")
 	<script>
 		console.log('app.blade');
-		$(function() {
-			Echo.channel(`company`)
-				.listen('CompanyCreated', (e) => {
-					console.log(e);
-					alert(e.company.name + " has been created");
-				})
-		});
+		// $(function() {
+		// 	Echo.channel(`company`)
+		// 		.listen('CompanyCreated', (e) => {
+		// 			console.log(e);
+		// 			alert(e.company.name + " has been created");
+		// 		})
+		// });
 	</script>
 </body>
 

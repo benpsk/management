@@ -24,8 +24,8 @@ Route::post('/logout', 'HomeController@logout')->name('logout');
 
 Route::middleware('auth')->group(function () {
 
-    Route::get('/', [CompanyController::class, 'index']);
-    Route::get('/home', [CompanyController::class, 'index'])->name('home');
+    Route::get('/', [CompanyController::class, 'home']);
+    Route::get('/home', [CompanyController::class, 'home'])->name('home');
 
     Route::resource('company', CompanyController::class);
     Route::post('company/search', [CompanyController::class, 'searchData'])->name('com-search');

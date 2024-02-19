@@ -1,4 +1,4 @@
-import $ from "jquery";
+// import $ from "jquery";
 import axios from "axios";
 import lodash from "lodash";
 import Popper from "popper.js";
