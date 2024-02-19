@@ -28,5 +28,11 @@
         
         <button type="submit" class="btn btn-primary">Submit</button>
         <button type="reset" class="btn btn-danger">Reset</button>
+        <button hx-get="{{ route('company.index')}}"
+          hx-trigger="click"
+          class="btn btn-secondary"
+        >
+        Back 
+      </button>
       </form>
 </div>

@@ -1,8 +1,4 @@
-@extends('layouts.app')
-
-@section('content')
-<div class="container my-3">
-    
+<div id="listing" class="container my-3">
     @if (Auth::user()->can('gate'))
 
         <a href="{{ route('employee.create')}}" class="btn btn-sm btn-primary mb-4" role="button">Add Employee</a>
@@ -98,33 +94,5 @@
         </table>
     </div>
     {{ $employees->links() }} 
-
-         
 </div>
-@endsection
 
-@section('script-after')
-
-<script>
-
-    $(function() {
-        $('#all').click(function(e) {
-            window.location.href = '/employee';
-        });
-
-        $('#export').click(function(e) {
-            e.preventDefault();
-            document.getElementById("searchForm").action =  "{{ route('emp-download')}}";
-            $('#searchForm').submit();
-
-        })
-
-        $('#btnSearch').click(function(e) {
-            e.preventDefault();
-            document.getElementById("searchForm").action =  "{{ route('emp-search')}}";
-            $('#searchForm').submit();
-        })
-    });
-</script>
-
-@endsection
