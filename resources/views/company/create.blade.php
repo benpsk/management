@@ -1,12 +1,6 @@
-@extends('layouts.app')
-
-@section('content')
 <div class="container">
-  
   <h4 class="my-3">Company Form</h4>
-
-
-    <form action="{{ route('company.store')}}" method="POST">
+    <form hx-post="{{ route('company.store')}}">
           @csrf
           @if ($errors->any())
             <div class="alert alert-danger">
@@ -34,20 +28,5 @@
         
         <button type="submit" class="btn btn-primary">Submit</button>
         <button type="reset" class="btn btn-danger">Reset</button>
-
       </form>
-        
 </div>
-@endsection
-@section('script-after')
-<script>
-
-$(function () {
-  Echo.channel(`company`)
-    .listen('CompanyCreated', (e) => {
-        console.log(e);
-    });
-    console.log('hello');
-});
-  </script>
-@endsection 

@@ -1,12 +1,14 @@
 @extends("layouts.app")
-
 @section("content")
-	<div class="container my-3">
-
+	<div id="listing-page" class="container my-3">
 		@if (Auth::user()->can("gate"))
-			<a class="btn btn-sm btn-primary mb-4" href="{{ route("company.create") }}" role="button">Add Company</a>
+			<a class="btn btn-sm btn-primary mb-4" role="button"
+					hx-get="/company/create"
+					hx-trigger="click"
+					hx-target="#listing-page"
+					hx-swap="outerHTML"
+			>Add Company</a>
 		@endif
-
 
 		<form id="searchForm" method="POST">
 			@csrf
@@ -97,25 +99,25 @@
 
 @section("script-after")
 	<script>
-		$(function() {
-			$('#all').click(function(e) {
-				window.location.href = '/home';
-			});
+		// $(function() {
+		// 	$('#all').click(function(e) {
+		// 		window.location.href = '/home';
+		// 	});
 
-			$('#export').click(function(e) {
-				e.preventDefault();
-				document.getElementById("searchForm").action = "{{ route("com-download") }}";
-				$('#searchForm').submit();
+		// 	$('#export').click(function(e) {
+		// 		e.preventDefault();
+		// 		document.getElementById("searchForm").action = "{{ route("com-download") }}";
+		// 		$('#searchForm').submit();
 
-			})
+		// 	})
 
-			$('#btnSearch').click(function(e) {
-				e.preventDefault();
-				document.getElementById("searchForm").action = "{{ route("com-search") }}";
-				$('#searchForm').submit();
-			})
+		// 	$('#btnSearch').click(function(e) {
+		// 		e.preventDefault();
+		// 		document.getElementById("searchForm").action = "{{ route("com-search") }}";
+		// 		$('#searchForm').submit();
+		// 	})
 			
-			console.log('hello');
-		});
+		// 	console.log('hello');
+		// });
 	</script>
 @endsection
