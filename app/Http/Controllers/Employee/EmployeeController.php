@@ -30,7 +30,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $employees = Employee::where('status', 1)->orderBy('created_at', 'desc')->paginate(10);
+        $employees = Employee::query()->where('status', 1)->orderBy('created_at', 'desc')->paginate(10);
 
         return view('employee.index', compact('employees'));
     }

@@ -2,128 +2,112 @@
 <html lang="{{ str_replace("_", "-", app()->getLocale()) }}">
 
 <head>
-	<meta charset="utf-8">
-	<meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
 
-	<!-- CSRF Token -->
-	<meta content="{{ csrf_token() }}" name="csrf-token">
+    <!-- CSRF Token -->
+    <meta content="{{ csrf_token() }}" name="csrf-token">
 
-	<title>{{ config("app.name", "Laravel") }}</title>
+    <title>{{ config("app.name", "Laravel") }}</title>
 
-	<!-- Fonts -->
-	<link href="//fonts.gstatic.com" rel="dns-prefetch">
-	<link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <!-- Fonts -->
+    <link href="//fonts.gstatic.com" rel="dns-prefetch">
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
-	<script src="{{ asset("js/app.js") }}" async></script>
-	<script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC" crossorigin="anonymous"></script>
+    <script src="{{ asset("js/app.js") }}" async></script>
+    <script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC" crossorigin="anonymous"></script>
 
-	@vite(["resources/css/app.css", "resources/js/app.js"])
+    @vite(["resources/css/app.css", "resources/js/app.js"])
 </head>
 
 <body>
-	<div id="app">
-		<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-			<div class="container">
-				<a class="navbar-brand" href="{{ url("/") }}">
-					Company Management Systems
-				</a>
-				{{-- Begin Right Collapse Navbar --}}
-				<div class="border-left ml-auto" id="navbarSupportedContent">
+    <div id="app">
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+            <div class="container">
+                <a class="navbar-brand" href="{{ url("/") }}">
+                    Company Management Systems
+                </a>
+                {{-- Begin Right Collapse Navbar --}}
+                <div class="border-left ml-auto" id="navbarSupportedContent">
 
-					<!-- Right Side Of Navbar -->
-					<ul class="m-0 p-0" style="list-style-type: none;">
-						<!-- Authentication Links -->
-						@guest
-							@if (Route::has("login"))
-								<li class="nav-item">
-									<a class="nav-link" href="{{ route("login") }}">{{ __("Login") }}</a>
-								</li>
-							@endif
-						@else
-							<li class="nav-item dropdown">
-								<a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown"
-									href="#" id="navbarDropdown" role="button" v-pre>
-									{{ Auth::user()->name }}
-								</a>
+                    <!-- Right Side Of Navbar -->
+                    <ul class="m-0 p-0" style="list-style-type: none;">
+                        <!-- Authentication Links -->
+                        @guest
+                        @if (Route::has("login"))
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route("login") }}">{{ __("Login") }}</a>
+                        </li>
+                        @endif
+                        @else
+                        <li class="nav-item dropdown">
+                            <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="navbarDropdown" role="button" v-pre>
+                                {{ Auth::user()->name }}
+                            </a>
 
-								<div aria-labelledby="navbarDropdown" class="dropdown-menu dropdown-menu-right">
-									<a class="dropdown-item" href="{{ route("logout") }}"
-										onclick="event.preventDefault();
+                            <div aria-labelledby="navbarDropdown" class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="{{ route("logout") }}" onclick="event.preventDefault();
                                                         document.getElementById('logout-form').submit();">
-										{{ __("Logout") }}
-									</a>
+                                    {{ __("Logout") }}
+                                </a>
 
-									<form action="{{ route("logout") }}" class="d-none" id="logout-form" method="POST">
-										@csrf
-									</form>
+                                <form action="{{ route("logout") }}" class="d-none" id="logout-form" method="POST">
+                                    @csrf
+                                </form>
 
-								</div>
-							</li>
-						@endguest
-					</ul>
-				</div>
-				{{-- End of Right side Nab bar --}}
-			</div>
-		</nav>
+                            </div>
+                        </li>
+                        @endguest
+                    </ul>
+                </div>
+                {{-- End of Right side Nab bar --}}
+            </div>
+        </nav>
 
-		@auth
-			<aside class="container py-3">
-				<nav>
-					<div class="nav nav-tabs" id="nav-tab" role="tablist">
-						<a role="button" class="nav-item nav-link {{ set_active("home") }} {{ set_active("/") }} {{ set_active("company*") }}"
-							id="nav-home1-tab"
-							hx-get="{{ route("company.index") }}" 
-							hx-trigger="click"
-							hx-target="#main"
-							hx-swap="innerHTML"	
-							hx-push-url="true"
-							>Company</a>
-						<a role="button" class="nav-item nav-link {{ set_active("employee*") }}" 
-							id="nav-home-tab"
-							hx-get="{{ route("employee.index") }}"
-							hx-trigger="click"
-							hx-target="#main"
-							hx-swap="innerHTML"	
-							hx-push-url="true"
-							>Employee</a>
-					</div>
-				</nav>
-			</aside>
-		@endauth
+        @auth
+        <aside class="container py-3">
+            <nav>
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                    <a role="button" class="nav-item nav-link {{ set_active("home") }} {{ set_active("/") }} {{ set_active("company*") }}" id="nav-home1-tab" hx-get="{{ route("company.index") }}" hx-trigger="click" hx-target="#app" hx-swap="outerHTML" hx-push-url="true">Company</a>
+                    <a role="button" class="nav-item nav-link {{ set_active("employee*") }}" id="nav-home-tab" hx-get="{{ route("employee.index") }}" hx-trigger="click" hx-target="#app" hx-swap="outerHTML" hx-push-url="true">Employee</a>
+                </div>
+            </nav>
+        </aside>
+        @endauth
 
-		<main id="main">
-			@yield("content")
-		</main>
+        <main id=" main">
+            @yield("content")
+        </main>
 
-	</div>
+    </div>
 
-	@yield("script-after")
-	<script>
-		// Listen for custom event 'htmx:afterSwap' and update active state of nav links
-		document.addEventListener('htmx:afterSwap', function (event) {
-			// Find all navigation links and update their active state based on the current URL
-			var navLinks = document.querySelectorAll('.nav-item.nav-link');
-			console.log(event);
-			var currentPath = event.detail.pathInfo.finalRequestPath;
+    @yield("script-after")
+    <script>
+        // Listen for custom event 'htmx:afterSwap' and update active state of nav links
+        // document.addEventListener('htmx:afterSwap', function (event) {
+        // 	// Find all navigation links and update their active state based on the current URL
+        // 	var navLinks = document.querySelectorAll('.nav-item.nav-link');
+        // 	console.log(event);
+        // 	var currentPath = event.detail.pathInfo.finalRequestPath;
 
-			navLinks.forEach(function (link) {
-				if (link.getAttribute('hx-get') === currentPath) {
-					link.classList.add('active');
-				} else {
-					link.classList.remove('active');
-				}
-			});
-		});
+        // 	navLinks.forEach(function (link) {
+        // 		if (link.getAttribute('hx-get') === currentPath) {
+        // 			link.classList.add('active');
+        // 		} else {
+        // 			link.classList.remove('active');
+        // 		}
+        // 	});
+        // });
 
-		console.log('app.blade');
-		// $(function() {
-		// 	Echo.channel(`company`)
-		// 		.listen('CompanyCreated', (e) => {
-		// 			console.log(e);
-		// 			alert(e.company.name + " has been created");
-		// 		})
-		// });
-	</script>
+        console.log('app.blade');
+        // $(function() {
+        // 	Echo.channel(`company`)
+        // 		.listen('CompanyCreated', (e) => {
+        // 			console.log(e);
+        // 			alert(e.company.name + " has been created");
+        // 		})
+        // });
+    </script>
 </body>
 
 </html>

@@ -1,23 +1,20 @@
 @extends('layouts.app')
-
 @section('content')
 <div class="container mb-5">
-  
-  <h4 class="my-3">Employee Form</h4>
-
+    <h4 class="my-3">Employee Form</h4>
     <form action="{{ route('employee.store')}}" method="POST" enctype="multipart/form-data">
-          @csrf
-          @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
+        @csrf
+        @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
         @endif
 
-        
+
 
         <div class="mb-3">
             <label for="first_name" class="form-label">First Name</label>
@@ -25,48 +22,48 @@
         </div>
 
         <div class="mb-3">
-          <label for="last_name" class="form-label">Last Name</label>
-          <input type="text" name="last_name" class="form-control" id="last_name" aria-describedby="emailHelp" placeholder="eg. Doe">
+            <label for="last_name" class="form-label">Last Name</label>
+            <input type="text" name="last_name" class="form-control" id="last_name" aria-describedby="emailHelp" placeholder="eg. Doe">
         </div>
 
         <div class="mb-3">
-          <label for="email" class="form-label">Email Address</label>
-          <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="eg. example@example.com">
+            <label for="email" class="form-label">Email Address</label>
+            <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="eg. example@example.com">
         </div>
 
         <div class="mb-3">
-          <label for="company" class="form-label">Company</label>
-          <select name="company_id" id="company" class="form-control">
-            @foreach($companies as $company)
+            <label for="company" class="form-label">Company</label>
+            <select name="company_id" id="company" class="form-control">
+                @foreach($companies as $company)
                 <option value="{{ $company->id }}"> {{ $company->name}} </option>
-            @endforeach
-          </select>
+                @endforeach
+            </select>
         </div>
 
         <div class="mb-3">
-          <label for="department" class="form-label">Department</label>
-          <input type="text" name="department" class="form-control" id="department" aria-describedby="emailHelp" placeholder="eg. Science">
+            <label for="department" class="form-label">Department</label>
+            <input type="text" name="department" class="form-control" id="department" aria-describedby="emailHelp" placeholder="eg. Science">
         </div>
 
         <div class="mb-3">
-          <label for="phone" class="form-label">Phone</label>
-          <input type="number" name="phone" class="form-control" id="phone" aria-describedby="emailHelp" placeholder="eg. 09123456789">
-      </div>
+            <label for="phone" class="form-label">Phone</label>
+            <input type="number" name="phone" class="form-control" id="phone" aria-describedby="emailHelp" placeholder="eg. 09123456789">
+        </div>
 
         <div class="mb-3">
-          <label for="staff_id" class="form-label">Staff Id</label>
-          <input type="text" name="staff_id" class="form-control" id="staff_id" aria-describedby="emailHelp" placeholder="eg. John">
-      </div>
+            <label for="staff_id" class="form-label">Staff Id</label>
+            <input type="text" name="staff_id" class="form-control" id="staff_id" aria-describedby="emailHelp" placeholder="eg. John">
+        </div>
         <div class="mb-3">
             <label for="address" class="form-label">Address</label>
             <input type="text" name="address" class="form-control" id="address" aria-describedby="emailHelp" placeholder="eg. example@example.com">
         </div>
-  
-        
+
+
         <button type="submit" class="btn btn-primary">Submit</button>
         <button type="reset" class="btn btn-danger">Reset</button>
 
-      </form>
-        
+    </form>
+
 </div>
 @endsection

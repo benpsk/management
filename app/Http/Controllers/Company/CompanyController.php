@@ -25,11 +25,6 @@ class CompanyController extends Controller
         $this->middleware('can:gate')->except(['index', 'show', 'searchData']);
     }
 
-    public function home()
-    {
-        return view('home');
-    }
-
     /**
      * Display a listing of the resource.
      *
