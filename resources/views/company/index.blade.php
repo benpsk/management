@@ -58,11 +58,11 @@
                         <td>{{ $company->email }}</td>
                         <td>{{ $company->address }}</td>
                         <td>
-                            <a class="btn btn-sm btn-success" href="{{ route("company.show", $company->id) }}" role="button">
+                            <a class="btn btn-sm btn-success" hx-get="{{ route("company.show", $company->id) }}" hx-swap="outerHTML" hx-target="#app" hx-push-url="true" role="button">
                                 view
                             </a>
                             @if (Auth::user()->can("gate"))
-                            <a class="btn btn-sm btn-info" href="{{ route("company.edit", $company->id) }}" role="button">
+                            <a class="btn btn-sm btn-info" hx-get="{{ route("company.edit", $company->id) }}" hx-swap="outerHTML" hx-target="#app" hx-trigger="click" hx-push-url="true">
                                 update
                             </a>
 

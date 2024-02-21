@@ -9,11 +9,11 @@
         <div class="card-body">
 
             @if($company == null)
-                <div class="row">
-                    <div class="col text-center text-success">
-                        No Data FOund!
-                    </div>
+            <div class="row">
+                <div class="col text-center text-success">
+                    No Data FOund!
                 </div>
+            </div>
             @else
             <div class="row">
                 <div class="col">
@@ -50,9 +50,9 @@
             @endif
         </div>
     </div>
-   
-    <a href="{{ route('home') }}" type="button" class="btn btn-primary mt-3">Back</a>
 
-        
+    <a hx-get="{{ route('company.index') }}" hx-swap="outerHTML" hx-target="#app" hx-push-url="true" type="button" class="btn btn-primary mt-3">Back</a>
+
+
 </div>
 @endsection
