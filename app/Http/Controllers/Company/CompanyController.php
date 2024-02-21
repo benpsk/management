@@ -13,8 +13,6 @@ use Illuminate\Support\Facades\Storage;
 
 class CompanyController extends Controller
 {
-
-
     /**
      * Create a new controller instance.
      *
