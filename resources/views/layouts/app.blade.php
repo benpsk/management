@@ -82,32 +82,6 @@
     </div>
 
     @yield("script-after")
-    <script>
-        // Listen for custom event 'htmx:afterSwap' and update active state of nav links
-        // document.addEventListener('htmx:afterSwap', function (event) {
-        // 	// Find all navigation links and update their active state based on the current URL
-        // 	var navLinks = document.querySelectorAll('.nav-item.nav-link');
-        // 	console.log(event);
-        // 	var currentPath = event.detail.pathInfo.finalRequestPath;
-
-        // 	navLinks.forEach(function (link) {
-        // 		if (link.getAttribute('hx-get') === currentPath) {
-        // 			link.classList.add('active');
-        // 		} else {
-        // 			link.classList.remove('active');
-        // 		}
-        // 	});
-        // });
-
-        console.log('app.blade');
-        // $(function() {
-        // 	Echo.channel(`company`)
-        // 		.listen('CompanyCreated', (e) => {
-        // 			console.log(e);
-        // 			alert(e.company.name + " has been created");
-        // 		})
-        // });
-    </script>
 </body>
 
 </html>
