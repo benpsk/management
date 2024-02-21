@@ -72,18 +72,18 @@
 					<div class="nav nav-tabs" id="nav-tab" role="tablist">
 						<a role="button" class="nav-item nav-link {{ set_active("home") }} {{ set_active("/") }} {{ set_active("company*") }}"
 							id="nav-home1-tab"
-							hx-get="{{ route("company.index") }}" 
+							hx-get="{{ route("company.index") }}"
 							hx-trigger="click"
 							hx-target="#main"
-							hx-swap="innerHTML"	
+							hx-swap="innerHTML"
 							hx-push-url="true"
 							>Company</a>
-						<a role="button" class="nav-item nav-link {{ set_active("employee*") }}" 
+						<a role="button" class="nav-item nav-link {{ set_active("employee*") }}"
 							id="nav-home-tab"
 							hx-get="{{ route("employee.index") }}"
 							hx-trigger="click"
 							hx-target="#main"
-							hx-swap="innerHTML"	
+							hx-swap="innerHTML"
 							hx-push-url="true"
 							>Employee</a>
 					</div>

@@ -25,14 +25,14 @@
             <label for="address" class="form-label">Address</label>
             <input type="text" name="address" class="form-control" id="address" aria-describedby="emailHelp" placeholder="eg. example@example.com">
         </div>
-        
+
         <button type="submit" class="btn btn-primary">Submit</button>
         <button type="reset" class="btn btn-danger">Reset</button>
         <button hx-get="{{ route('company.index')}}"
           hx-trigger="click"
           class="btn btn-secondary"
         >
-        Back 
+        Back
       </button>
       </form>
 </div>

@@ -26,13 +26,13 @@
                         export
                     </button>
                     @endif
-    
+
                 </div>
-                
+
             </div>
         </form>
 
-    
+
 
     <div class="table-responsive">
         <table class="table table-striped " width="100%" cellspacing="0" >
@@ -55,7 +55,7 @@
                             No Data Available!
                         </td>
                     </tr>
-                @endif 
+                @endif
                 @foreach ($employees as $employee)
                 <tr>
                     <td>{{ $employee->staff_id }}</td>
@@ -88,11 +88,10 @@
 
                     </td>
                 </tr>
-                    
+
                 @endforeach
             </tbody>
         </table>
     </div>
-    {{ $employees->links() }} 
+    {{ $employees->links() }}
 </div>
-
