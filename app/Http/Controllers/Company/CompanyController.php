@@ -125,11 +125,8 @@ class CompanyController extends Controller
     public function destroy($id)
     {
         $company = Company::where('id', $id)->first();
-
-
         $company->status = 0;
         $company->save();
-        return redirect('/');
     }
 
     public function searchData(Request $request)

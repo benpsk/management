@@ -42,7 +42,7 @@
                     <th>Action</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody hx-target="closest tr" hx-swap="outerHTML swap:1s">
 
                 @if (count($companies) <= 0) <tr>
                     <td class="text-success text-center" colspan="8">
@@ -65,14 +65,12 @@
                             <a class="btn btn-sm btn-info" hx-get="{{ route("company.edit", $company->id) }}" hx-swap="outerHTML" hx-target="#app" hx-trigger="click" hx-push-url="true">
                                 update
                             </a>
-
-                            <a class="btn btn-sm btn-danger" href="{{ route("company.destroy", $company->id) }}" onclick="event.preventDefault();
-												document.getElementById('com-delete').submit();" role="button">
-                                delete
-                            </a>
-                            <form action="{{ route("company.destroy", $company->id) }}" class="d-none" id="com-delete" method="POST">
+                            <form hx-confirm="Are you sure?" hx-post="{{ route("company.destroy", $company->id) }}">
                                 @csrf
-                                @method("delete")
+                                @method("DELETE")
+                                <button type="submit" class="btn btn-sm btn-danger" role="button">
+                                    delete
+                                </button>
                             </form>
                             @endif
                         </td>
