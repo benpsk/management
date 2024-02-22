@@ -5,7 +5,7 @@
     <a class="btn btn-sm btn-primary mb-4" role="button" hx-get="{{ route('company.create')}}" hx-trigger="click" hx-target="#app" hx-swap="outerHTML" hx-push-url="true">Add Company</a>
     @endif
 
-    <form id="searchForm" method="POST">
+    <div>
         <span class="htmx-indicator">
             Searching...
         </span>
@@ -13,15 +13,15 @@
             <div class="col">
                 <input type="search" class="form-control border-top-0 border-left-0 border-right-0 border-bottom-3 rounded-0 search mb-3 shadow-none" id="search" name="search" placeholder="Search..." value="{{ $search ?? '' }}" hx-post="{{ route('com-search')}}" hx-swap="outerHTML" hx-target="#app" hx-vals='{"_token": "{{ csrf_token() }}" }' hx-trigger="input changed delay:500ms, search" hx-indicator".htmx-indicator" />
             </div>
-            <div class="col-3 col-sm-6 col-md-3">
+            <div class="col-2 col-sm-3 col-md-2">
                 @if (Auth::user()->can("gate"))
-                <button class="btn btn-secondary" id="export" style="border-radius: 20px;" type="button">
+                <button class="btn btn-secondary" id="export" style="border-radius: 8px;" type="button" hx-post="{{ route('com-download')}}" hx-swap="none" hx-vals='{"_token": "{{ csrf_token() }}" }' hx-trigger="click">
                     export
                 </button>
                 @endif
             </div>
         </div>
-    </form>
+    </div>
 
     <div class="table-responsive">
         <table cellspacing="0" class="table-striped table" width="100%">
@@ -74,4 +74,18 @@
     </div>
     {{ $companies->links() }}
 </div>
+@endsection
+@section('script-after')
+<script>
+    document.addEventListener('htmx:afterRequest', function(event) {
+        console.log(event.detail.xhr);
+        const response = JSON.parse(event.detail.xhr.response);
+        console.log(response.file);
+        if (response.file) {
+            console.log(' file exists');
+            window.open(response.file, '_blank');
+        }
+    });
+</script>
+
 @endsection

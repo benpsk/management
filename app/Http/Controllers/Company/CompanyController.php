@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Company;
 
-use App\Events\CompanyCreated;
 use App\Exports\CompanyExport;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RequestCompany;
 use App\Jobs\ProcessCompany;
 use App\Models\Company\Company;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Maatwebsite\Excel\Excel as ExcelExcel;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CompanyController extends Controller
 {
@@ -145,7 +146,8 @@ class CompanyController extends Controller
     public function download(Request $request)
     {
         $search = $request->search;
-
-        return (new CompanyExport($search))->download('company-data.xlsx');
+        $filename = 'company_export_' . Str::uuid() . '.xlsx';
+        Excel::store(new CompanyExport($search), "public/export/$filename");
+        return response()->json(['file' => asset("export/$filename")]);
     }
 }
