@@ -142,10 +142,8 @@ class EmployeeController extends Controller
     public function destroy($id)
     {
         $emp = Employee::where('id', $id)->first();
-
         $emp->status = 0;
         $emp->save();
-        return redirect()->route('employee.index');
     }
 
     public function searchData(Request $request)

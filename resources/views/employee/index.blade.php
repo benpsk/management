@@ -33,7 +33,7 @@
                     <th>Action</th>
                 </tr>
             </thead>
-            <tbody id="showData">
+            <tbody hx-target="closest tr" hx-swap="outerHTML swap:1s">
                 @if(count($employees) <= 0) <tr>
                     <td colspan="8" class="text-center text-success">
                         No Data Available!
@@ -48,30 +48,22 @@
                         <td>{{ $employee->company->name}}</td>
                         <td>{{ $employee->department}}</td>
                         <td>{{ $employee->phone}}</td>
-
                         <td>{{ $employee->address}}</td>
                         <td>
-                            <a href="{{ route('employee.show',  $employee->id )}}" class="btn btn-sm btn-success" role="button">
+                            <a hx-get="{{ route('employee.show',  $employee->id )}}" hx-swap="outerHTML" hx-target="#app" hx-push-url="true" class="btn btn-sm btn-success" role="button">
                                 view
                             </a>
-
                             @if (Auth::user()->can('gate'))
-                            <a href="{{ route('employee.edit',  $employee->id )}}" class="btn btn-sm btn-info" role="button">
+                            <a hx-get="{{ route('employee.edit',  $employee->id )}}" hx-swap="outerHTML" hx-target="#app" hx-push-url="true" class="btn btn-sm btn-info" role="button">
                                 update
                             </a>
-                            <a href="{{ route('employee.destroy', $employee->id)}}" class="btn btn-sm btn-danger" role="button" onclick="event.preventDefault();
-                                                document.getElementById('emp-delete').submit();">
+                            <a hx-delete="{{ route('employee.destroy', $employee->id)}}" hx-vals='js:{"_token": "{{ csrf_token() }}", "_method": "DELETE"}' class="btn btn-sm btn-danger" role="button">
                                 delete
                             </a>
-                            <form id="emp-delete" action="{{ route('employee.destroy', $employee->id)}}" method="POST" class="d-none">
-                                @csrf
-                                @method('delete')
-                            </form>
                             @endif
 
                         </td>
                     </tr>
-
                     @endforeach
             </tbody>
         </table>
