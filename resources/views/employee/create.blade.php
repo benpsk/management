@@ -16,17 +16,17 @@
 
         <div class="mb-3">
             <label for="first_name" class="form-label">First Name</label>
-            <input type="text" name="first_name" class="form-control" id="first_name" aria-describedby="emailHelp" placeholder="eg. John" onkeyup="this.setCustomValidity('')" hx-on:htmx:validation:validate="if(this.value == '') { this.setCustomValidity('Please enter the first name'); }">
+            <input type="text" name="first_name" class="form-control" id="first_name" aria-describedby="emailHelp" placeholder="eg. John">
         </div>
 
         <div class="mb-3">
             <label for="last_name" class="form-label">Last Name</label>
-            <input type="text" name="last_name" class="form-control" id="last_name" aria-describedby="emailHelp" placeholder="eg. Doe" onkeyup="this.setCustomValidity('')" hx-on:htmx:validation:validate="if(this.value == '') { this.setCustomValidity('Please enter the last name'); }">
+            <input type="text" name="last_name" class="form-control" id="last_name" aria-describedby="emailHelp" placeholder="eg. Doe">
         </div>
 
         <div class="mb-3">
             <label for="email" class="form-label">Email Address</label>
-            <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="eg. example@example.com" onkeyup="this.setCustomValidity('')" hx-on:htmx:validation:validate="if(this.value == '') { this.setCustomValidity('Please enter the email addres'); }">
+            <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="eg. example@example.com">
         </div>
 
         <div class="mb-3">

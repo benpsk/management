@@ -17,17 +17,17 @@
 
         <div class="mb-3">
             <label for="first_name" class="form-label">First Name</label>
-            <input type="text" name="first_name" class="form-control" id="first_name" value="{{$employee->first_name}}" aria-describedby="emailHelp" placeholder="eg. John" required>
+            <input type="text" name="first_name" class="form-control" id="first_name" value="{{$employee->first_name}}" aria-describedby="emailHelp" placeholder="eg. John">
         </div>
 
         <div class="mb-3">
             <label for="last_name" class="form-label">Last Name</label>
-            <input type="text" name="last_name" class="form-control" id="last_name" value="{{$employee->last_name}}" aria-describedby="emailHelp" placeholder="eg. Doe" required>
+            <input type="text" name="last_name" class="form-control" id="last_name" value="{{$employee->last_name}}" aria-describedby="emailHelp" placeholder="eg. Doe">
         </div>
 
         <div class="mb-3">
             <label for="email" class="form-label">Email Address</label>
-            <input type="email" name="email" class="form-control" id="email" value="{{$employee->email}}" aria-describedby="emailHelp" placeholder="eg. example@example.com" required>
+            <input type="email" name="email" class="form-control" id="email" value="{{$employee->email}}" aria-describedby="emailHelp" placeholder="eg. example@example.com">
         </div>
 
         <div class="mb-3">
