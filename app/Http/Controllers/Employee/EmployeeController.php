@@ -8,7 +8,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\RequestEmployee;
 use App\Models\Company\Company;
 use App\Models\Employee\Employee;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
 
 class EmployeeController extends Controller
 {
@@ -150,11 +151,10 @@ class EmployeeController extends Controller
     public function searchData(Request $request)
     {
         $search = trim($request->search);
-
         $employees = Employee::join('companies', 'employees.company_id', '=', 'companies.id')
+            ->select('employees.*', 'companies.name')
             ->where('employees.status', 1)
             ->where('employees.first_name', 'like', '%' . $search . '%')
-            ->select('employees.*', 'companies.name')
             ->orWhere('employees.last_name', 'like', '%' . $search . '%')
             ->orWhereRaw("concat(first_name, ' ', last_name) like '%$search%' ")
             ->orWhere('employees.department', 'like', '%' . $search . '%')
@@ -163,13 +163,14 @@ class EmployeeController extends Controller
             ->orderBy('employees.created_at', 'desc')
             ->paginate(10);
 
-        return view('employee.index', compact('employees'));
+        return view('employee.index', compact('employees', 'search'));
     }
 
     public function download(Request $request)
     {
         $search = $request->search;
-
-        return (new EmployeeExport($search))->download('emp-data.xlsx');
+        $filename = 'company_export_' . Str::uuid() . '.xlsx';
+        Excel::store(new EmployeeExport($search), "public/export/$filename");
+        return response()->json(['file' => asset("export/$filename")]);
     }
 }

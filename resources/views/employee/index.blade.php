@@ -4,32 +4,18 @@
     @if (Auth::user()->can('gate'))
     <a hx-get="{{ route('employee.create')}}" hx-trigger="click" hx-swap="outerHTML" hx-target="#app" hx-push-url="true" class="btn btn-sm btn-primary mb-4" role="button">Add Employee</a>
     @endif
-    <form method="POST" id="searchForm">
-        @csrf
-        <div class="row mb-3">
-            <div class="col">
-                <input type="text" name="search" value="<?php echo isset($_POST['search']) ? $_POST['search'] : '' ?>" class="form-control border-top-0 border-left-0 border-right-0 border-bottom-3 mb-3 shadow-none rounded-0 search" placeholder="Search...">
-            </div>
-
-            <div class="col-3 col-sm-6 col-md-3">
-                <button type="submit" id="btnSearch" class="btn btn-success btn-search" style="border-radius: 20px;">
-                    search
-                </button>
-                <button type="button" id="all" class="btn btn-primary" style="border-radius: 20px;">
-                    all
-                </button>
-
-                @if (Auth::user()->can('gate'))
-
-                <button type="button" id="export" class="btn btn-secondary" style="border-radius: 20px;">
-                    export
-                </button>
-                @endif
-
-            </div>
-
+    <div class="row mb-3">
+        <div class="col">
+            <input type="search" class="form-control border-top-0 border-left-0 border-right-0 border-bottom-3 rounded-0 search mb-3 shadow-none" id="search" name="search" placeholder="Search..." value="{{ $search ?? '' }}" hx-post="{{ route('emp-search')}}" hx-swap="outerHTML" hx-target="#app" hx-vals='{"_token": "{{ csrf_token() }}" }' hx-trigger="input changed delay:500ms, search" />
         </div>
-    </form>
+        <div class="col-2 col-sm-3 col-md-2">
+            @if (Auth::user()->can("gate"))
+            <button class="btn btn-secondary" id="export" style="border-radius: 8px;" type="button" hx-post="{{ route('emp-download')}}" hx-swap="none" hx-vals='js:{"_token": "{{ csrf_token() }}", "search": document.querySelector("#search").value }' hx-trigger="click">
+                export
+            </button>
+            @endif
+        </div>
+    </div>
 
 
 
@@ -92,4 +78,23 @@
     </div>
     {{ $employees->links() }}
 </div>
+@endsection
+@section('script-after')
+<script>
+    document.addEventListener('htmx:afterRequest', function(event) {
+        console.log(event);
+        // Check if the response content type is JSON
+        const contentType = event.detail.xhr.getResponseHeader('Content-Type');
+        if (contentType && contentType.includes('application/json')) {
+            // Parse the response JSON
+            const response = JSON.parse(event.detail.xhr.response);
+            console.log(response.file);
+            if (response.file) {
+                console.log('file exists');
+                window.open(response.file, '_blank');
+            }
+        }
+    });
+</script>
+
 @endsection
