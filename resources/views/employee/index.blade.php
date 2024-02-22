@@ -2,13 +2,11 @@
 @section('content')
 <div id="listing" class="container my-3">
     @if (Auth::user()->can('gate'))
-    <a href="{{ route('employee.create')}}" class="btn btn-sm btn-primary mb-4" role="button">Add Employee</a>
+    <a hx-get="{{ route('employee.create')}}" hx-trigger="click" hx-swap="outerHTML" hx-target="#app" hx-push-url="true" class="btn btn-sm btn-primary mb-4" role="button">Add Employee</a>
     @endif
-
     <form method="POST" id="searchForm">
         @csrf
         <div class="row mb-3">
-
             <div class="col">
                 <input type="text" name="search" value="<?php echo isset($_POST['search']) ? $_POST['search'] : '' ?>" class="form-control border-top-0 border-left-0 border-right-0 border-bottom-3 mb-3 shadow-none rounded-0 search" placeholder="Search...">
             </div>

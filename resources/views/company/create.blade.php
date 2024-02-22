@@ -2,7 +2,7 @@
 @section('content')
 <div class="container" id="company-create-form">
     <h4 class="my-3">Company Form</h4>
-    <form hx-post="{{ route('company.store')}}" hx-target="#app" hx-swap="outerHTML">
+    <form hx-post="{{ route('company.store')}}" hx-target="#app" hx-swap="outerHTML" hx-push-url="true">
         @csrf
         @if ($errors->any())
         <div class="alert alert-danger">

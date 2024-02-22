@@ -26,7 +26,7 @@ class RequestEmployee extends FormRequest
         return [
             'first_name' => 'required|max:35',
             'last_name' => 'required|max:35',
-            'email' => 'unique:employees,id' . $this->id,
+            'email' => 'required|unique:employees,id' . $this->id,
             'address' => 'max:255',
             'phone' => 'max:12',
             'staff_id' => 'max:16',
