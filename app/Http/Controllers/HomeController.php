@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company\Company;
-use Exception;
 use Google\Client;
 use Google\Service\Drive;
 use Illuminate\Http\Request;
@@ -30,7 +29,6 @@ class HomeController extends Controller
     public function index()
     {
         $companies = Company::orderBy('created_at', 'desc')->paginate(10);
-
         return view('company.index', compact('companies'));
     }
 

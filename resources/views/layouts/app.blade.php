@@ -24,7 +24,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url("/") }}">
+                <a class="navbar-brand" hx-get="{{ url("/") }}" hx-swap="outerHTML" hx-push-url="true" hx-target="#app" role="button">
                     Company Management Systems
                 </a>
                 {{-- Begin Right Collapse Navbar --}}
@@ -36,7 +36,7 @@
                         @guest
                         @if (Route::has("login"))
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route("login") }}">{{ __("Login") }}</a>
+                            <a class="nav-link" hx-get="{{ route("login") }}" hx-swap="outerHTML" hx-push-url="true" hx-target="#app" role="button">{{ __("Login") }}</a>
                         </li>
                         @endif
                         @else
@@ -44,17 +44,10 @@
                             <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="navbarDropdown" role="button" v-pre>
                                 {{ Auth::user()->name }}
                             </a>
-
                             <div aria-labelledby="navbarDropdown" class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" href="{{ route("logout") }}" onclick="event.preventDefault();
-                                                        document.getElementById('logout-form').submit();">
+                                <a class="dropdown-item" hx-post="{{ route("logout") }}" hx-swap="outerHTML" hx-push-url="true" hx-target="#app" hx-vals='js:{"_token": "{{ csrf_token() }}"}'>
                                     {{ __("Logout") }}
                                 </a>
-
-                                <form action="{{ route("logout") }}" class="d-none" id="logout-form" method="POST">
-                                    @csrf
-                                </form>
-
                             </div>
                         </li>
                         @endguest

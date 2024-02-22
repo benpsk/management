@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
 <div class="container py-5">
     <div class="row justify-content-center">
@@ -8,7 +7,7 @@
                 <div class="card-header">{{ __('Login') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
+                    <form hx-post="{{ route('login') }}" hx-swap="outerHTML" hx-target="#app" hx-push-url="true">
                         @csrf
 
                         @if(Session::has('error'))
