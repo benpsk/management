@@ -133,12 +133,12 @@ class CompanyController extends Controller
     {
         $search = trim($request->search);
 
-        $companies = Company::where('status', 1)
+        $companies = Company::query()->where('status', 1)
             ->where('name', 'like', '%' . $search . '%')
             ->orderBy('created_at', 'desc')
             ->paginate(10);
 
-        return view('company.index', compact('companies'));
+        return view('company.index', compact('companies', 'search'));
     }
 
 
