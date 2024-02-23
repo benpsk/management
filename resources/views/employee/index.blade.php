@@ -70,8 +70,6 @@
     </div>
     {{ $employees->links() }}
 </div>
-@endsection
-@section('script-after')
 <script>
     document.addEventListener('htmx:afterRequest', function(event) {
         console.log(event);
@@ -88,5 +86,6 @@
         }
     });
 </script>
-
 @endsection
+
+
